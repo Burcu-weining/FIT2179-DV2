@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Average Rainfall in Each State in Malaysia",
+    "subtitle": "Average rainfall in each state in Malaysia.",
+    "font": "Georgia, Times New Roman, serif",
+    "fontSize": 18,
+    "color": "#1f5f99",
+    "subtitleFont": "Arial, sans-serif",
+    "subtitleFontSize": 12,
+    "subtitleColor": "#222222",
+    "anchor": "start"
+  },
+  "width": 440,
+  "height": 360,
+  "projection": {
+    "type": "mercator"
+  },
+  "data": {
+    "url": "data/state_rainfall_map.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.shapeISO == 'MY-01' ? 'Johor' : datum.shapeISO == 'MY-02' ? 'Kedah' : datum.shapeISO == 'MY-03' ? 'Kelantan' : datum.shapeISO == 'MY-04' ? 'Melaka' : datum.shapeISO == 'MY-05' ? 'Negeri Sembilan' : datum.shapeISO == 'MY-06' ? 'Pahang' : datum.shapeISO == 'MY-07' ? 'Pulau Pinang' : datum.shapeISO == 'MY-08' ? 'Perak' : datum.shapeISO == 'MY-09' ? 'Perlis' : datum.shapeISO == 'MY-10' ? 'Selangor' : datum.shapeISO == 'MY-11' ? 'Terengganu' : datum.shapeISO == 'MY-12' ? 'Sabah' : datum.shapeISO == 'MY-13' ? 'Sarawak' : datum.shapeISO == 'MY-14' ? 'Kuala Lumpur' : datum.shapeISO == 'MY-15' ? 'Labuan' : datum.shapeISO == 'MY-16' ? 'Putrajaya' : datum.shapeISO == 'MY-17' ? 'Putrajaya' : datum.shapeISO",
+      "as": "state"
+    },
+    {
+      "lookup": "state",
+      "from": {
+        "data": {
+          "url": "data/malaysia_states_simple.geojson",
+          "format": {
+            "type": "json",
+            "property": "features"
+          }
+        },
+        "key": "properties.name"
+      },
+      "as": "geo"
+    }
+  ],
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 0.8
+  },
+  "encoding": {
+    "shape": {
+      "field": "geo",
+      "type": "geojson"
+    },
+    "color": {
+      "field": "avg_rainfall_mm",
+      "type": "quantitative",
+      "title": "Average rainfall (mm)",
+      "scale": {
+        "scheme": "cividis",
+        "domainMin": 0
+      },
+      "legend": {
+        "orient": "bottom",
+        "titleLimit": 220,
+        "labelLimit": 80
+      }
+    },
+    "tooltip": [
+      {
+        "field": "state",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "shapeISO",
+        "type": "nominal",
+        "title": "State code"
+      },
+      {
+        "field": "avg_rainfall_mm",
+        "type": "quantitative",
+        "title": "Average rainfall (mm)",
+        "format": ".2f"
+      },
+      {
+        "field": "avg_normal_rainfall_mm",
+        "type": "quantitative",
+        "title": "Normal rainfall (mm)",
+        "format": ".2f"
+      },
+      {
+        "field": "difference_from_normal",
+        "type": "quantitative",
+        "title": "Difference from normal",
+        "format": ".2f"
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

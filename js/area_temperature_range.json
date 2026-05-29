@@ -1,0 +1,73 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+      "text": "Monthly Temperature Range",
+      "subtitle": "The shaded area shows the gap between minimum and maximum temperature.",
+      "font": "Georgia, Times New Roman, serif",
+      "fontSize": 18,
+      "color": "#1f5f99",
+      "subtitleFont": "Arial, sans-serif",
+      "subtitleFontSize": 12,
+      "subtitleColor": "#222222",
+      "anchor": "start"
+    },
+    "width": 720,
+    "height": 360,
+    "data": {
+      "url": "data/temperature_monthly_clean.csv"
+    },
+    "layer": [
+      {
+        "mark": {
+          "type": "area",
+          "opacity": 0.35
+        },
+        "encoding": {
+          "x": {
+            "field": "month_name",
+            "type": "ordinal",
+            "title": "Month",
+            "sort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+          },
+          "y": {
+            "field": "min_temp",
+            "type": "quantitative",
+            "title": "Temperature"
+          },
+          "y2": {
+            "field": "max_temp"
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "line",
+          "point": true,
+          "tooltip": true
+        },
+        "encoding": {
+          "x": {
+            "field": "month_name",
+            "type": "ordinal",
+            "sort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+          },
+      "y": {
+        "field": "avg_temp",
+        "type": "quantitative",
+        "title": "Temperature"
+      },
+          "tooltip": [
+            {"field": "month_name", "type": "ordinal", "title": "Month"},
+            {"field": "min_temp", "type": "quantitative", "title": "Min temperature", "format": ".2f"},
+            {"field": "avg_temp", "type": "quantitative", "title": "Avg temperature", "format": ".2f"},
+            {"field": "max_temp", "type": "quantitative", "title": "Max temperature", "format": ".2f"}
+          ]
+        }
+      }
+    ],
+    "config": {
+      "view": {
+        "stroke": null
+      }
+    }
+  }

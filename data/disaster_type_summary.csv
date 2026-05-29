@@ -1,0 +1,9 @@
+disaster_type,count
+Drought,2.0
+Earthquake,2.0
+Epidemic,11.0
+Flood,70.0
+Mass movement (dry),1.0
+Mass movement (wet),5.0
+Storm,7.0
+Wildfire,4.0
